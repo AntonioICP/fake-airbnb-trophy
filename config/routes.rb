@@ -11,6 +11,6 @@ Rails.application.routes.draw do
   # root "posts#index"
     root to: 'flats#index'
   resources :flats, only: [:index, :show] do
-    resources :requests, only: [:new, :create, :update]
+    resources :requests, only: [:new, :create, :update, :edit]
   end
 end
