@@ -1,0 +1,40 @@
+class RequestsController < ApplicationController
+  before_action :set_request, only: %i[edit update]
+
+  def new
+    @request = Request.new
+  end
+
+  def create
+    @flat = Flat.find(params[:flat_id])
+    @request = Request.new(request_params)
+    @request.flat = @flat
+    @request.user = current_user # Optional, if using Devise or similar
+    if @request.save!
+      redirect_to flats_path, notice: "Request created!"
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  def edit
+  end
+
+  def update
+    if @request.update(request_params)
+      redirect_to flats_path, notice: "Request updated!"
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  private
+
+  def set_request
+    @request = Request.find(params[:id])
+  end
+
+  def request_params
+    params.require(:request).permit(:start_date, :end_date, :approved)
+  end
+end
