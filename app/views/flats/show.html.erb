@@ -1,0 +1,19 @@
+<div class="card-trip">
+  <img src="https://www.bhg.com/thmb/Ke48CUYRrXfAc_CJP4eXuZsrWkw=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/living-room-gallery-shelves-l-shaped-couch-ELeyNpyyqpZ8hosOG3EG1X-b5a39646574544e8a75f2961332cd89a.jpg" />
+  <div class="card-trip-infos">
+    <div>
+      <h2>@flat.name</h2>
+      <p>@flat.description</p>
+      <p>@flat.address</p>
+    </div>
+    <h2 class="card-trip-pricing">@flat.price</h2>
+  </div>
+</div>
+<div>
+    <button type="button" class="btn btn-flat" data-bs-toggle="modal" data-bs-target="#new_movie_modal">
+      Request booking
+    </button>
+    <%= link_to new_request_path do %>
+      <i class="fa-solid fa-plus"></i> Add a bookmark
+    <% end %>
+  </div>
