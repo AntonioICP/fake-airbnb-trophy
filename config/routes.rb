@@ -5,6 +5,6 @@ Rails.application.routes.draw do
 
     root to: 'flats#index'
   resources :flats, only: [:index, :show] do
-    resources :requests, only: [:new, :create, :update, :edit]
+    resources :requests, only: [:index, :new, :create, :update, :edit]
   end
 end

@@ -1,7 +1,7 @@
 class FlatsController < ApplicationController
   def index
     @flats = Flat.all
-    @flat = Flat.new
+    @request = Request.new
   end
 
   def show
