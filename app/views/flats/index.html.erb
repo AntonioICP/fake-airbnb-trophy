@@ -4,11 +4,11 @@
     <div class="card-trip-infos">
       <div>
         <% @flats.each do |flat| %>
-        <h2><%= flat.name %></h2>
-        <p> <%= flat.address %></p>
+          <h2><%= flat.name %></h2>
+          <p> <%= flat.address %></p>
+          <h2 class="card-trip-pricing"><%= flat.price %></h2>
+        <% end %>
       </div>
-      <h2 class="card-trip-pricing"><%= flat.price %></h2>
-      <% end %>
       <img src="https://kitt.lewagon.com/placeholder/users/krokrob" class="card-trip-user avatar-bordered" />
     </div>
   </div>
