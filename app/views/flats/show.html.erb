@@ -1,19 +1,24 @@
-<div class="card-trip">
-  <img src="https://www.bhg.com/thmb/Ke48CUYRrXfAc_CJP4eXuZsrWkw=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/living-room-gallery-shelves-l-shaped-couch-ELeyNpyyqpZ8hosOG3EG1X-b5a39646574544e8a75f2961332cd89a.jpg" />
-  <div class="card-trip-infos">
-    <div>
-      <h2>@flat.name</h2>
-      <p>@flat.description</p>
-      <p>@flat.address</p>
+<div class="d-flex justify-content-center">
+  <div class="card-trip shadow" style="width: 50%;">
+    <img src="<%= @flat.image_url %>" alt="<%= @flat.name %>" class="w-100" style="height: 500px; object-fit: cover;" />
+
+    <div class="card-trip-infos position-relative p-3" style="height: auto;">
+      <div>
+        <h2><%= @flat.name %></h2>
+        <p><%= @flat.description %></p>
+        <p><%= @flat.address %></p>
+      </div>
+        <h2 class="card-trip-pricing">$<%= @flat.price %></h2>
+
+      <% if @flat.user.avatar_url.present? %>
+        <img src="<%= @flat.user.avatar_url %>" class="card-trip-user avatar-bordered position-absolute end-0 bottom-0 me-3 mb-3" style="height: 60px; width: 60px;" alt="<%= @flat.user.first_name %>'s avatar" />
+      <% end %>
     </div>
-    <h2 class="card-trip-pricing">@flat.price</h2>
   </div>
 </div>
-<div>
-    <button type="button" class="btn btn-flat" data-bs-toggle="modal" data-bs-target="#new_movie_modal">
-      Request booking
-    </button>
-    <%= link_to new_request_path do %>
-      <i class="fa-solid fa-plus"></i> Add a bookmark
-    <% end %>
-  </div>
+
+<div class="d-flex justify-content-center mt-3">
+  <%= link_to new_flat_request_path(@flat), class: "btn btn-outline-primary" do %>
+    <i class="fa-solid fa-plus"></i> Book this Place
+  <% end %>
+</div>
