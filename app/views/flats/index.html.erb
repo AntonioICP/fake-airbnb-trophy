@@ -1,14 +1,16 @@
 <div class="cards">
   <% @flats.each do |flat| %>
     <%= link_to flat_path(flat), class: "card-trip text-decoration-none text-dark" do %>
-      <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
-      <div class="card-trip-infos">
-        <div>
-          <h2><%= flat.name %></h2>
-          <p><%= flat.address %></p>
+      <div class="card-trip">
+        <img src="<%= flat.image_url %>" alt="<%= flat.name %>" />
+        <div class="card-trip-infos d-flex justify-content-between align-items-center">
+          <div>
+            <h2><%= flat.name %></h2>
+            <p><%= flat.address %></p>
+            <h2 class="card-trip-pricing">$<%= flat.price %></h2>
+          </div>
+          <img src="<%= flat.user.avatar_url %>" class="card-trip-user avatar-bordered" alt="<%= flat.user.first_name %>'s avatar" />
         </div>
-          <h2 class="card-trip-pricing">$<%= flat.price %></h2>
-        <img src="https://kitt.lewagon.com/placeholder/users/krokrob" class="card-trip-user avatar-bordered" />
       </div>
     <% end %>
   <% end %>
