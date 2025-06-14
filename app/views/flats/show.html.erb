@@ -1,25 +1,28 @@
-<div class="d-flex justify-content-center">
-  <div class="card-trip shadow" style="width: 50%;">
-    <img src="<%= @flat.image_url %>" alt="<%= @flat.name %>" class="w-100" style="height: 500px; object-fit: cover;" />
+<div class="container">
+  <div class="row p-4 g-4">
+    <%# FLAT INFO COLUMN %>
+    <div class="col-12 col-lg-8">
+      <div class="card-trip-show shadow">
+        <img src="<%= @flat.image_url %>" alt="<%= @flat.name %>" class="w-100" style="height: 500px; object-fit: cover;" />
 
-    <div class="card-trip-infos position-relative p-3" style="height: auto;">
-      <div>
-        <h2><%= @flat.name %></h2>
-        <p><%= @flat.description %></p>
-        <p><%= @flat.address %></p>
+        <div class="card-trip-infos position-relative p-3">
+          <div>
+            <h2><%= @flat.name %></h2>
+            <p><%= @flat.description %></p>
+            <p><%= @flat.address %></p>
+          </div>
+          <h2 class="card-trip-pricing">$<%= @flat.price %></h2>
+          <% if @flat.user.avatar_url.present? %>
+            <img src="<%= @flat.user.avatar_url %>" class="card-trip-user avatar-bordered position-absolute end-0 bottom-0 me-3 mb-3" style="height: 60px; width: 60px;" alt="<%= @flat.user.first_name %>'s avatar" />
+          <% end %>
+        </div>
       </div>
-      <h2 class="card-trip-pricing">$<%= @flat.price %></h2>
-      <% if @flat.user.avatar_url.present? %>
-        <img src="<%= @flat.user.avatar_url %>" class="card-trip-user avatar-bordered position-absolute end-0 bottom-0 me-3 mb-3" style="height: 60px; width: 60px;" alt="<%= @flat.user.first_name %>'s avatar" />
-      <% end %>
+    </div>
+    <%# BOOKING COLUMN %>
+    <div class="col-12 col-lg-4">
+      <div class="border p-4">
+        <%= render "request-form", flat: @flat, request: @request %>
+      </div>
     </div>
   </div>
-  <div class="d-flex justify-content-center mt-3">
-  <div data-controller="toggle" class="mt-5">
-    <button data-action="click->toggle#fire" class="btn btn-outline-primary"><i class="fa-solid fa-plus"></i>Book this Place</button>
-    <div data-toggle-target="togglableElement" class="d-none">
-      <%= render "request-form", flat: @flat, request: @request %>
-    </div>
-  </div>
-</div>
 </div>
