@@ -36,7 +36,8 @@ puts "Seeding users and flats..."
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
     email: Faker::Internet.email,
-    password: Faker::Internet.password(min_length: 8, mix_case: true, special_characters: true),
+    password: 123456,
+    # Faker::Internet.password(min_length: 8, mix_case: true, special_characters: true),
     avatar_url: avatar_images.sample
   )
 
