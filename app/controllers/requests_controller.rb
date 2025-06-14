@@ -10,14 +10,18 @@ class RequestsController < ApplicationController
   end
 
   def create
-    @flat = Flat.find(params[:flat_id])
-    @request = Request.new(request_params)
-    @request.flat = @flat
-    @request.user = current_user # Optional, if using Devise or similar
-    if @request.save!
-      redirect_to flats_path, notice: "Request created!"
+    if user_signed_in?
+      @flat = Flat.find(params[:flat_id])
+      @request = Request.new(request_params)
+      @request.flat = @flat
+      @request.user = current_user # Optional, if using Devise or similar
+      if @request.save!
+        redirect_to requests_path, notice: "Request created!"
+      else
+        render :new, status: :unprocessable_entity
+      end
     else
-      render :new, status: :unprocessable_entity
+      redirect_to new_user_session_path, class: "dropdown-item"
     end
   end
 

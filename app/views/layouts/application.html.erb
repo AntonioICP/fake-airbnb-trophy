@@ -14,6 +14,12 @@
 
   <body>
     <%= render "partials/navbar" %>
+    <% flash.each do |key, message| %>
+    <div class="alert alert-<%= key == "notice" ? "success" : "danger" %> alert-dismissible fade show text-center mx-auto mt-3" role="alert" style="max-width: 500px;">
+      <%= message %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+      <% end %>
     <%= yield %>
     <%= render "partials/footer" %>
   </body>
