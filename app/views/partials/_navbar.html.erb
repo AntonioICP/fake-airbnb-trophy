@@ -3,12 +3,6 @@
     <%= link_to "#", class: "navbar-brand" do %>
       <i class="fa-brands fa-airbnb"></i>
     <% end %>
-    <div data-controller="toggle" class="mt-5">
-      <button data-action="click->toggle#fire" class="btn btn-outline-primary">Search</button>
-      <div data-toggle-target="togglableElement" class="d-none">
-        <%= render "form", flat: @flat %>
-      </div>
-    </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
