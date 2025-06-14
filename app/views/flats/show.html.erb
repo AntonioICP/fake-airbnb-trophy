@@ -4,7 +4,6 @@
     <div class="col-12 col-lg-8">
       <div class="card-trip-show shadow">
         <img src="<%= @flat.image_url %>" alt="<%= @flat.name %>" class="w-100" style="height: 500px; object-fit: cover;" />
-
         <div class="card-trip-infos d-flex justify-content-between align-items-center p-3">
           <div>
             <h2><%= @flat.name %></h2>
@@ -15,10 +14,24 @@
         </div>
       </div>
     </div>
-    <%# BOOKING COLUMN %>
-    <div class="col-12 col-lg-4">
-      <div class="border p-4">
+
+    <%# BOOKING CARD %>
+    <div class="col-12 col-lg-4" style="
+        display: flex;
+        flex-direction: column;
+    ">
+      <div class="card-trip-show shadow p-4 mb-4">
         <%= render "request-form", flat: @flat, request: @request %>
+      </div>
+
+      <%# MAP CARD%>
+      <div class="card-trip-show shadow d-flex align-items-stretch" style="flex-grow: 1; min-height: 300px;">
+        <div
+          style="width: 100%; height: 100%;"
+          data-controller="map"
+          data-map-markers-value="<%= @markers.to_json %>"
+          data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+        </div>
       </div>
     </div>
   </div>
