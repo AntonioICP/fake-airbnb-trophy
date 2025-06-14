@@ -1,3 +1,6 @@
-<%= f.input :opening_date,
+<%= simple_form_for @flat do |f| %>
+  <%= f.input :opening_date,
             as: :string,
             input_html: { data: { controller: "datepicker" } } %>
+  <%= f.button :submit, class: "btn btn-primary" %>
+<% end %>
