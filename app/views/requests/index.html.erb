@@ -1,0 +1,10 @@
+<h1>Your requests</h1>
+<ol>
+  <% @requests.each do |request| %>
+    <li><%= request.flat %></li>
+    <li><%= request.start_date %></li>
+    <li><%= request.end_date %></li>
+    <li><%= link_to flat_path(flat) %></li>
+    <%# <li><%= link_to "Edit" %>
+  <% end %>
+</ol>
