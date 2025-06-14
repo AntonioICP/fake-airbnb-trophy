@@ -14,13 +14,12 @@
       <% end %>
     </div>
   </div>
+  <div class="d-flex justify-content-center mt-3">
+  <div data-controller="toggle" class="mt-5">
+    <button data-action="click->toggle#fire" class="btn btn-outline-primary"><i class="fa-solid fa-plus"></i>Book this Place</button>
+    <div data-toggle-target="togglableElement" class="d-none">
+      <%= render "request-form", flat: @flat, request: @request %>
+    </div>
+  </div>
 </div>
-
-
-<div class="d-flex justify-content-center mt-3">
-  <%= link_to new_flat_request_path(@flat), class: "btn btn-outline-primary" do %>
-    <i class="fa-solid fa-plus"></i> Book this Place
-  <% end %>
 </div>
-
-<%= render "partials/request-form" %>
