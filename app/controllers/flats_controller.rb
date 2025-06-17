@@ -6,6 +6,7 @@ class FlatsController < ApplicationController
     end
     @markers = @flats.geocoded.map do |flat|
       {
+        id: flat.id,
         lat: flat.latitude,
         lng: flat.longitude
       }

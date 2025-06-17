@@ -11,3 +11,15 @@
 // Your CSS partials
 @import "components/index";
 @import "pages/index";
+
+.custom-marker {
+  width: 20px;
+  height: 20px;
+  background-color: #3f52a3;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+}
+
+.custom-marker.highlight {
+  background-color: #e63946;
+}
