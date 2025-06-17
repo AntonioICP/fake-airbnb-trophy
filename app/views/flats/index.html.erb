@@ -2,29 +2,22 @@
   <div class="row">
     <%# Cards: 2/3 of the page %>
     <div class="col-12 col-lg-8">
-      <%= form_with url: flats_path, method: :get, class: "d-flex" do %>
-        <%= text_field_tag :query,
-            params[:query],
-            class: "form-control",
-            placeholder: "Type a keyword"
-        %>
-        <%= submit_tag "Search", name: "", class: "btn btn-primary" %>
-      <% end %>
       <div class="cards">
         <% @flats.each do |flat| %>
-          <%= link_to flat_path(flat), class: "text-decoration-none text-dark" do %>
-            <div class="card-trip mb-4">
+          <%= link_to flat_path(flat), class: "text-decoration-none text-dark", data: { marker_id: flat.id } do %>
+            <div class="card-trip">
               <img src="<%= flat.image_url %>" alt="<%= flat.name %>" />
               <div class="card-trip-infos d-flex justify-content-between align-items-center">
                 <div>
                   <h2><%= flat.name %></h2>
+                  <p><%= flat.address %></p>
                 </div>
                 <h2 class="card-trip-pricing">$<%= flat.price %></h2>
               </div>
             </div>
           <% end %>
         <% end %>
-      </div>
+</div>
     </div>
 
     <%# Map: 1/3 of the page, sticky %>
