@@ -1,22 +1,39 @@
 <div class="justify-content-center text-center">
   <h1>My Bookings</h1>
-</div>
-<div class="cards">
-  <% @requests.each do |request| %>
-    <%= link_to request_path(request), class: "card-trip text-decoration-none text-dark" do %>
-      <div class="card-trip">
-        <img src="<%= request.flat.image_url %>" alt="<%= request.flat.name %>" />
-        <div class="card-trip-infos d-flex justify-content-between align-items-center">
-          <div>
-            <h2><%= request.flat.name %></h2>
-            <div class="d-flex">
-            <p class="me-3">CHECK-IN <%= request.start_date %></p>
-            <p>CHECK-OUT <%= request.end_date %></p>
+  </div>
+<div class="container-fluid px-4">
+  <div class="row">
+    <%# Cards: 2/3 of the page %>
+    <div class="col-12 col-lg-8">
+      <div class="cards">
+        <% @requests.each do |request| %>
+          <%= link_to request_path(request), class: "card-trip text-decoration-none text-dark" do %>
+            <div class="card-trip">
+              <img src="<%= request.flat.image_url %>" alt="<%= request.flat.name %>" />
+              <div class="card-trip-infos d-flex justify-content-between align-items-center">
+                <div>
+                  <h2><%= request.flat.name %></h2>
+                  <div class="d-flex">
+                  <p class="me-3">CHECK-IN <%= request.start_date %></p>
+                  <p>CHECK-OUT <%= request.end_date %></p>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-            <h2 class="card-trip-pricing">$<%= (request.end_date - request.start_date).to_i * request.flat.price %></h2>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+    <%# Map: 1/3 of the page, sticky %>
+    <div class="col-12 col-lg-4">
+      <div class="card-trip-show shadow" style="position: sticky; top: 10px; height: 90vh;">
+        <div
+          style="width: 100%; height: 100%;"
+          data-controller="map"
+          data-map-markers-value="<%= @markers.to_json %>"
+          data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
         </div>
       </div>
-    <% end %>
-  <% end %>
+    </div>
 </div>
