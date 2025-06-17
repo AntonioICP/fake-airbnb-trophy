@@ -1,9 +1,15 @@
 class RequestsController < ApplicationController
   before_action :set_request, only: %i[edit update]
 
-  def index
-    @requests = Request.all
+def index
+  @requests = Request.all.includes(:flat)
+  @markers = @requests.map(&:flat).compact.select(&:geocoded?).map do |flat|
+    {
+      lat: flat.latitude,
+      lng: flat.longitude
+    }
   end
+end
 
   def new
     @request = Request.new
