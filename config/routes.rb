@@ -4,8 +4,8 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
     root to: 'flats#index'
-  resources :flats, only: [:index, :show] do
-    resources :requests, only: [:new, :create, :update, :edit]
+  resources :flats, only: %i[index show] do
+    resources :requests, only: %i[new create update edit]
   end
-  resources :requests, only: [:index]
+  resources :requests, only: %i[index show]
 end

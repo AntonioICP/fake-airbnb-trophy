@@ -1,8 +1,11 @@
 class RequestsController < ApplicationController
-  before_action :set_request, only: %i[edit update]
+  before_action :set_request, only: %i[edit update show]
 
   def index
     @requests = Request.all
+  end
+
+  def show
   end
 
   def new
