@@ -37,3 +37,17 @@
   top: -20px;
   width: 40px;
 }
+
+.check-ap:hover {
+  color: #0a5c2e; /* deeper green */
+}
+
+.check-dec:hover {
+  color: #a30000; /* richer red */
+}
+
+.check-ap:hover,
+.check-dec:hover {
+  opacity: 0.9;
+  transition: all 0.2s ease-in-out;
+}

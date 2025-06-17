@@ -39,7 +39,7 @@ end
 
   def update
     if @request.update(request_params)
-      redirect_to flats_path, notice: "Request updated!"
+      redirect_back fallback_location: request_path(@request), notice: "Request updated!"
     else
       render :edit, status: :unprocessable_entity
     end

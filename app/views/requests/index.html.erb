@@ -13,11 +13,12 @@
               <div class="card-trip-infos d-flex justify-content-between align-items-center">
                 <div>
                   <h2><%= request.flat.name %></h2>
-                  <div class="d-flex">
-                  <p class="me-3">CHECK-IN <%= request.start_date %></p>
-                  <p>CHECK-OUT <%= request.end_date %></p>
+                  <div class="d-flex mt-2">
+                  <p class="me-3">Check-in <%= request.start_date.strftime("%B %-d, %Y") %></p>
                   </div>
+                  <p>Check-out <%= request.end_date.strftime("%B %-d, %Y") %></p>
                 </div>
+                <h2 class="card-trip-pricing">$<%= request.flat.price %></h2>
               </div>
             </div>
           <% end %>

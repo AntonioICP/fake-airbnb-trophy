@@ -16,7 +16,7 @@
     </div>
 
     <%# BOOKING CARD %>
-    <div class="col-12 col-lg-4" style="
+    <div class="col-12 col-lg-4 d-flex flex-column gap-3" style="
         display: flex;
         flex-direction: column;">
       <%# MAP CARD%>
@@ -40,14 +40,43 @@
           <p class="mb-1"><%= @request.end_date.strftime("%B %-d, %Y") %></p>
         </div>
         <div class="d-flex justify-content-between">
-          <p class="mb-1 text-muted">PRICE PER NIGHT</p>
-          <p class="mb-1">$<%= @request.flat.price %></p>
+          <p class="mb-1 text-muted">PRICE</p>
+          <p class="mb-1">$<%= @request.flat.price %> AUD X <%= (@request.end_date - @request.start_date).to_i %> nights</p>
         </div>
         <hr>
         <div class="d-flex justify-content-between fw-bold">
           <p class="mb-0">TOTAL</p>
-          <p class="mb-0">$<%= (@request.end_date - @request.start_date).to_i * @request.flat.price %></p>
+          <p class="mb-0">$<%= ((@request.end_date - @request.start_date).to_i * @request.flat.price).to_f %> AUD</p>
         </div>
+      </div>
+
+      <%# Approval section %>
+      <div class="card shadow p-3 mt-3">
+        <h5 class="mb-3">Manage Booking</h5>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <%= button_to request_path(@request), method: :patch,
+                  params: { request: { approved: true } },
+                  class: "check-ap border-0 bg-transparent p-0 d-inline-flex align-items-center gap-1" do %>
+                  <i class="fa-solid fa-thumbs-up"></i>
+                  <span>Approve</span>
+          <% end %>
+
+          <%= button_to request_path(@request), method: :patch,
+                  params: { request: { approved: false } },
+                  class: "check-dec border-0 bg-transparent p-0 d-inline-flex align-items-center gap-1" do %>
+                  <i class="fa-solid fa-thumbs-down"></i>
+                  <span>Decline</span>
+          <% end %>
+        </div>
+        <p class="text-muted small mb-0">Status:
+          <% if @request.approved.nil? %>
+            <span class="text-warning fw-semibold">Pending</span>
+          <% elsif @request.approved %>
+            <span class="text-success fw-semibold">Approved</span>
+          <% else %>
+            <span class="text-danger fw-semibold">Declined</span>
+          <% end %>
+        </p>
       </div>
     </div>
   </div>
