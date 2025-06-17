@@ -1,5 +1,5 @@
 class RequestsController < ApplicationController
-  before_action :set_request, only: %i[edit update]
+  before_action :set_request, only: %i[edit update show]
 
 def index
   @requests = Request.all.includes(:flat)
@@ -10,6 +10,9 @@ def index
     }
   end
 end
+
+  def show
+  end
 
   def new
     @request = Request.new
