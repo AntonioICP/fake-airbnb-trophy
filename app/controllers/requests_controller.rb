@@ -5,6 +5,7 @@ def index
   @requests = Request.all.includes(:flat)
   @markers = @requests.map(&:flat).compact.select(&:geocoded?).map do |flat|
     {
+      id: flat.id,
       lat: flat.latitude,
       lng: flat.longitude
     }
