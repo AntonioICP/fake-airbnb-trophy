@@ -29,26 +29,36 @@
         </div>
       </div>
       <%# Price breakdown div %>
-      <div class="card shadow p-3">
-        <h5 class="mb-3">Price Breakdown</h5>
-        <div class="d-flex justify-content-between">
-          <p class="mb-1 text-muted">CHECK-IN</p>
-          <p class="mb-1"><%= @request.start_date.strftime("%B %-d, %Y") %></p>
+      <%= form_with model: @request, method: :patch, local: true do |f| %>
+        <div class="card shadow p-3">
+          <h5 class="mb-3">Price Breakdown</h5>
+
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <label class="text-muted mb-0">CHECK-IN</label>
+            <%= f.text_field :start_date, class: "form-control w-50", data: { controller: "datepicker", datepicker_disable: @unavailable_dates.to_json }, value: @request.start_date %>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <label class="text-muted mb-0">CHECK-OUT</label>
+            <%= f.text_field :end_date, class: "form-control w-50", data: { controller: "datepicker", datepicker_disable: @unavailable_dates.to_json }, value: @request.end_date %>
+          </div>
+
+          <div class="d-flex justify-content-between">
+            <p class="mb-1 text-muted">PRICE</p>
+            <p class="mb-1">$<%= @request.flat.price %> AUD × <%= (@request.end_date - @request.start_date).to_i %> nights</p>
+          </div>
+
+          <hr>
+
+          <div class="d-flex justify-content-between fw-bold mb-3">
+            <p class="mb-0">TOTAL</p>
+            <p class="mb-0">$<%= ((@request.end_date - @request.start_date).to_i * @request.flat.price).to_f %> AUD</p>
+          </div>
+
+          <%= f.submit "Update", class: "btn btn-primary btn-sm w-100" %>
         </div>
-        <div class="d-flex justify-content-between">
-          <p class="mb-1 text-muted">CHECK-OUT</p>
-          <p class="mb-1"><%= @request.end_date.strftime("%B %-d, %Y") %></p>
-        </div>
-        <div class="d-flex justify-content-between">
-          <p class="mb-1 text-muted">PRICE</p>
-          <p class="mb-1">$<%= @request.flat.price %> AUD X <%= (@request.end_date - @request.start_date).to_i %> nights</p>
-        </div>
-        <hr>
-        <div class="d-flex justify-content-between fw-bold">
-          <p class="mb-0">TOTAL</p>
-          <p class="mb-0">$<%= ((@request.end_date - @request.start_date).to_i * @request.flat.price).to_f %> AUD</p>
-        </div>
-      </div>
+      <% end %>
+
 
       <%# Approval section %>
       <div class="card shadow p-3 mt-3">
