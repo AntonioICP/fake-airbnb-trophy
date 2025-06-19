@@ -2,17 +2,32 @@ class RequestsController < ApplicationController
   before_action :set_request, only: %i[edit update show]
 
 def index
-  @requests = Request.all.includes(:flat)
-  @markers = @requests.map(&:flat).compact.select(&:geocoded?).map do |flat|
-    {
-      id: flat.id,
-      lat: flat.latitude,
-      lng: flat.longitude
-    }
+  if user_signed_in?
+    @requests = current_user.requests
+    @markers = @requests.map(&:flat).compact.select(&:geocoded?).map do |flat|
+      {
+        id: flat.id,
+        lat: flat.latitude,
+        lng: flat.longitude
+      }
+    end
+  else
+    redirect_to root_path
   end
 end
 
   def show
+    @unavailable_dates = @request.flat.requests
+                                 .where.not(id: @request.id)
+                                 .where(approved: true)
+                                 .pluck(:start_date, :end_date)
+                                 .map { |range| { from: range[0], to: range[1] } }
+    @markers = [
+      {
+        lat: @request.flat.latitude,
+        lng: @request.flat.longitude
+      }
+    ]
   end
 
   def new
@@ -39,6 +54,11 @@ end
   end
 
   def update
+    puts "👀 Params received: #{params.inspect}"
+    if params[:request][:approved].present?
+      params[:request][:approved] = ActiveModel::Type::Boolean.new.cast(params[:request][:approved])
+    end
+
     if @request.update(request_params)
       redirect_back fallback_location: request_path(@request), notice: "Request updated!"
     else

@@ -20,6 +20,11 @@
           <li class="nav-item active">
             <%= link_to "Home", "/", class: "nav-link" %>
           </li>
+          <li class="nav-item active">
+            <% if user_signed_in? %>
+              <%= link_to "My Bookings", requests_path, class: "nav-link" %>
+            <% end %>
+          </li>
           <li class="nav-item dropdown">
   <% if user_signed_in? && current_user.avatar_url.present? %>
     <%= image_tag current_user.avatar_url,
@@ -40,7 +45,6 @@
 
   <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
     <% if user_signed_in? %>
-      <%= link_to "My Bookings", requests_path, class: "dropdown-item" %>
       <%= link_to "Log out", destroy_user_session_path, data: { turbo_method: :delete }, class: "dropdown-item" %>
     <% else %>
       <%= link_to "Log in / Sign up", new_user_session_path, class: "dropdown-item" %>
