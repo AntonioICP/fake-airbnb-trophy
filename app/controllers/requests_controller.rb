@@ -1,5 +1,5 @@
 class RequestsController < ApplicationController
-  before_action :set_request, only: %i[edit update show]
+  before_action :set_request, only: %i[edit update show destroy]
 
 def index
   if user_signed_in?
@@ -64,6 +64,11 @@ end
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    @request.destroy
+    redirect_to requests_path, status: :see_other
   end
 
   private

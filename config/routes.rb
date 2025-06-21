@@ -7,5 +7,5 @@ Rails.application.routes.draw do
   resources :flats, only: %i[index show] do
     resources :requests, only: %i[new create]
   end
-  resources :requests, only: %i[index show update edit]
+  resources :requests, only: %i[index show update edit destroy]
 end

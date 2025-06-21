@@ -3,31 +3,16 @@
     <%# FLAT INFO COLUMN %>
     <div class="col-12 col-lg-8">
       <div class="card-trip-show shadow">
-        <img src="<%= @request.flat.image_url %>" alt="<%= @request.flat.name %>" class="w-100" style="height: 500px; object-fit: cover;" />
         <div class="card-trip-infos d-flex justify-content-between align-items-center p-3">
           <div>
             <h2><%= @request.flat.name %></h2>
             <p><%= @request.flat.description %></p>
             <p><%= @request.flat.address %></p>
           </div>
-          <h2 class="card-trip-pricing">$<%= @request.flat.price %></h2>
+          <div class="d-flex flex-column align-items-end h-100">
+            <h2 class="card-trip-pricing">$<%= @request.flat.price %></h2>
+          </div>
         </div>
-      </div>
-    </div>
-
-    <%# BOOKING CARD %>
-    <div class="col-12 col-lg-4 d-flex flex-column gap-3" style="
-        display: flex;
-        flex-direction: column;">
-      <%# MAP CARD%>
-      <div class="card-trip-show shadow d-flex align-items-stretch" style="flex-grow: 1; min-height: 150px;">
-        <div
-          style="width: 100%; height: 100%;"
-          data-controller="map"
-          data-map-markers-value="<%= @markers.to_json %>"
-          data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
-        </div>
-      </div>
       <%# Price breakdown div %>
       <%= form_with model: @request, method: :patch, local: true do |f| %>
         <div class="card shadow p-3">
@@ -58,12 +43,29 @@
           <%= f.submit "Update", class: "btn btn-primary btn-sm w-100" %>
         </div>
       <% end %>
+      </div>
+    </div>
+
+    <%# BOOKING CARD %>
+    <div class="col-12 col-lg-4 d-flex flex-column gap-3" style="
+        display: flex;
+        flex-direction: column;">
+      <%# MAP CARD%>
+      <div class="card-trip-show shadow d-flex align-items-stretch" style="flex-grow: 1; min-height: 150px;">
+        <div
+          style="width: 100%; height: 100%;"
+          data-controller="map"
+          data-map-markers-value="<%= @markers.to_json %>"
+          data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+        </div>
+      </div>
+
 
 
       <%# Approval section %>
-      <div class="card shadow p-3 mt-3">
+      <div class="card shadow p-3 mt-2">
         <h5 class="mb-3">Manage Booking</h5>
-        <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="d-flex justify-content-between align-items-center mb-2">
           <%= button_to request_path(@request), method: :patch,
                   params: { request: { approved: true } },
                   class: "check-ap border-0 bg-transparent p-0 d-inline-flex align-items-center gap-1" do %>
@@ -78,7 +80,7 @@
                   <span>Decline</span>
           <% end %>
         </div>
-        <p class="text-muted small mb-0">Status:
+        <p class="text-muted small mb-2">Status:
           <% if @request.approved.nil? %>
             <span class="text-warning fw-semibold">Pending</span>
           <% elsif @request.approved %>
@@ -87,6 +89,9 @@
             <span class="text-danger fw-semibold">Declined</span>
           <% end %>
         </p>
+        <%= link_to "Cancel this booking", request_path(@request),
+            data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+            class: "btn btn-outline-danger btn-sm mt-auto" %>
       </div>
     </div>
   </div>
