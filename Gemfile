@@ -75,5 +75,6 @@ group :test do
 end
 
 gem "devise"
+gem "pundit"
 
 gem "geocoder"
