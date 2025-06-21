@@ -19,14 +19,21 @@
           <h5 class="mb-3">Price Breakdown</h5>
 
           <div class="d-flex justify-content-between align-items-center mb-2">
-            <label class="text-muted mb-0">CHECK-IN</label>
-            <%= f.text_field :start_date, class: "form-control w-50", data: { controller: "datepicker", datepicker_disable: @unavailable_dates.to_json }, value: @request.start_date %>
+            <label for="request_start_date" class="mb-0 text-muted">CHECK-IN</label>
+            <%= f.text_field :start_date,
+                  class: "form-control w-50 text-end",
+                  data: { controller: "datepicker", datepicker_disable: @unavailable_dates.to_json },
+                  value: @request.start_date %>
           </div>
 
           <div class="d-flex justify-content-between align-items-center mb-2">
-            <label class="text-muted mb-0">CHECK-OUT</label>
-            <%= f.text_field :end_date, class: "form-control w-50", data: { controller: "datepicker", datepicker_disable: @unavailable_dates.to_json }, value: @request.end_date %>
+            <label for="request_end_date" class="mb-0 text-muted">CHECK-OUT</label>
+            <%= f.text_field :end_date,
+                  class: "form-control w-50 text-end",
+                  data: { controller: "datepicker", datepicker_disable: @unavailable_dates.to_json },
+                  value: @request.end_date %>
           </div>
+
 
           <div class="d-flex justify-content-between">
             <p class="mb-1 text-muted">PRICE</p>
