@@ -1,5 +1,8 @@
 class RequestsController < ApplicationController
-  before_action :set_request, only: %i[edit update show]
+  before_action :set_request, only: %i[edit update show destroy]
+
+  after_action :verify_authorized, except: [:index, :show, :create, :update], unless: :skip_pundit?
+
 
 def index
   if user_signed_in?
@@ -14,9 +17,11 @@ def index
   else
     redirect_to root_path
   end
+  @requests = policy_scope(Request)
 end
 
   def show
+    authorize @request
     @unavailable_dates = @request.flat.requests
                                  .where.not(id: @request.id)
                                  .where(approved: true)
@@ -48,9 +53,11 @@ end
     else
       redirect_to new_user_session_path, class: "dropdown-item"
     end
+    authorize @request
   end
 
   def edit
+
   end
 
   def update
@@ -64,6 +71,11 @@ end
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    @request.destroy
+    redirect_to requests_path, status: :see_other
   end
 
   private

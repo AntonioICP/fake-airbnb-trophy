@@ -1,5 +1,12 @@
 class FlatsController < ApplicationController
+
+  # def skip_pundit?
+  #   true
+  # end
+
   def index
+    # @flats = policy_scope(Flat)
+    @flats = Flat.all
     if params[:query].present?
       @flats = Flat.search(params[:query], suggest: true).results
       flash[:alert] = "No results found for \"#{params[:query]}\"" if @flats.empty?
@@ -19,6 +26,11 @@ class FlatsController < ApplicationController
   def show
     @flat = Flat.find(params[:id])
     @request = Request.new
+    @unavailable_dates = @flat.requests
+                                 .where.not(id: @request.id)
+                                 .where(approved: true)
+                                 .pluck(:start_date, :end_date)
+                                 .map { |range| { from: range[0], to: range[1] } }
     @markers = [
       {
         lat: @flat.latitude,
