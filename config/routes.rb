@@ -3,9 +3,15 @@ Rails.application.routes.draw do
 
   get "up" => "rails/health#show", as: :rails_health_check
 
-    root to: 'flats#index'
+  root to: "flats#index"
+
   resources :flats, only: %i[index show] do
+    collection do
+      get :autocomplete
+    end
+
     resources :requests, only: %i[new create]
   end
+
   resources :requests, only: %i[index show update edit destroy]
 end

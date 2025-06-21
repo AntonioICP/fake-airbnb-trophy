@@ -8,9 +8,13 @@ class FlatsController < ApplicationController
     # @flats = policy_scope(Flat)
     @flats = Flat.all
     if params[:query].present?
-      @flats = @flats.where("address ILIKE ?", "%#{params[:query]}%")
+      @flats = Flat.search(params[:query], suggest: true).results
+      flash[:alert] = "No results found for \"#{params[:query]}\"" if @flats.empty?
+    else
+      @flats = Flat.all
     end
-    @markers = @flats.geocoded.map do |flat|
+
+    @markers = @flats.select(&:geocoded?).map do |flat|
       {
         id: flat.id,
         lat: flat.latitude,
@@ -34,4 +38,10 @@ class FlatsController < ApplicationController
       }
     ]
   end
+
+def autocomplete
+  results = Flat.search(params[:term], fields: [:address], limit: 5, load: false, misspellings: { below: 5 })
+  render json: results.map { |flat| { label: flat.address, value: flat.address } }
+end
+
 end

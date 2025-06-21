@@ -1,65 +1,66 @@
-<div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
-  <div class="container-fluid">
-    <%= link_to "/", class: "navbar-brand" do %>
+<div class="navbar navbar-expand-sm navbar-light navbar-lewagon fixed-top">
+  <div class="container-fluid d-flex justify-content-between align-items-center w-100">
+
+    <!-- Left: Logo -->
+    <%= link_to "/", class: "navbar-brand me-3" do %>
       <i class="fa-brands fa-airbnb"></i>
     <% end %>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="position-absolute start-50 translate-middle-x">
-  <%= form_with url: flats_path, method: :get, class: "d-flex search-pill" do %>
-    <%= text_field_tag :query,
-      params[:query],
-      class: "form-control rounded-start-pill border-end-0",
-      placeholder: "Type a keyword"
-    %>
-    <%= submit_tag "Search", name: "", class: "btn btn-primary rounded-end-pill border-start-0" %>
-  <% end %>
-</div>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+    <!-- Center: Search bar -->
+    <div class="flex-grow-1 mx-3" style="max-width: 700px;">
+      <div data-controller="autocomplete" class="position-relative w-100">
+        <%= form_with url: flats_path, method: :get, class: "d-flex search-pill" do %>
+          <%= text_field_tag :query,
+                            params[:query],
+                            placeholder: "Type a keyword",
+                            class: "form-control rounded-start-pill border-end-0",
+                            data: { autocomplete_target: "input", action: "input->autocomplete#search" } %>
+          <%= button_tag type: "submit", class: "btn btn-primary rounded-end-pill border-start-0" do %>
+            <i class="fa-solid fa-magnifying-glass"></i>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Right: Navbar links -->
+    <div class="d-flex align-items-center">
       <ul class="navbar-nav me-auto">
-        <%# if user_signed_in? %>
-          <li class="nav-item active">
-            <%= link_to "Home", "/", class: "nav-link" %>
+        <li class="nav-item">
+          <%= link_to "Home", "/", class: "nav-link" %>
+        </li>
+        <% if user_signed_in? %>
+          <li class="nav-item">
+            <%= link_to "My Bookings", requests_path, class: "nav-link" %>
           </li>
-          <li class="nav-item active">
-            <% if user_signed_in? %>
-              <%= link_to "My Bookings", requests_path, class: "nav-link" %>
+        <% end %>
+        <li class="nav-item dropdown">
+          <% if user_signed_in? && current_user.avatar_url.present? %>
+            <%= image_tag current_user.avatar_url,
+                          class: "avatar dropdown-toggle",
+                          id: "navbarDropdown",
+                          data: { bs_toggle: "dropdown" },
+                          aria: { haspopup: "true", expanded: "false" } %>
+          <% else %>
+            <%= link_to "#",
+                        class: "nav-link dropdown-toggle",
+                        id: "navbarDropdown",
+                        data: { bs_toggle: "dropdown" },
+                        role: "button",
+                        aria: { expanded: "false" } do %>
+              <i class="fa-solid fa-bars"></i>
             <% end %>
-          </li>
-          <li class="nav-item dropdown">
-  <% if user_signed_in? && current_user.avatar_url.present? %>
-    <%= image_tag current_user.avatar_url,
-                  class: "avatar dropdown-toggle",
-                  id: "navbarDropdown",
-                  data: { bs_toggle: "dropdown" },
-                  aria: { haspopup: "true", expanded: "false" } %>
-  <% else %>
-    <%= link_to "#",
-                class: "nav-link dropdown-toggle",
-                id: "navbarDropdown",
-                data: { bs_toggle: "dropdown" },
-                role: "button",
-                aria: { expanded: "false" } do %>
-      <i class="fa-solid fa-bars"></i>
-    <% end %>
-  <% end %>
+          <% end %>
 
-  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-    <% if user_signed_in? %>
-      <%= link_to "Log out", destroy_user_session_path, data: { turbo_method: :delete }, class: "dropdown-item" %>
-    <% else %>
-      <%= link_to "Log in / Sign up", new_user_session_path, class: "dropdown-item" %>
-    <% end %>
-  </div>
-</li>
-
-        <%# else %>
-          <!--li class="nav-item"-->
-            <%#= link_to "Login", new_user_session_path, class: "nav-link" %>
-          <!--/li-->
-        <%# end %>
+          <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+            <% if user_signed_in? %>
+              <%= link_to "Log out", destroy_user_session_path, data: { turbo_method: :delete }, class: "dropdown-item" %>
+            <% else %>
+              <%= link_to "Log in / Sign up", new_user_session_path, class: "dropdown-item" %>
+            <% end %>
+          </div>
+        </li>
       </ul>
     </div>
+
   </div>
 </div>
