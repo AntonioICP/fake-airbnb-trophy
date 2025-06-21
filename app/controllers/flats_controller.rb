@@ -1,5 +1,11 @@
 class FlatsController < ApplicationController
+
+  # def skip_pundit?
+  #   true
+  # end
+
   def index
+    # @flats = policy_scope(Flat)
     @flats = Flat.all
     if params[:query].present?
       @flats = @flats.where("address ILIKE ?", "%#{params[:query]}%")
