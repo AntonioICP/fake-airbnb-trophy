@@ -69,19 +69,20 @@
       <div class="card shadow p-3 mt-2">
         <h5 class="mb-3">Manage Booking</h5>
         <div class="d-flex justify-content-between align-items-center mb-2">
+        <% if current_user == @request.flat.user %>
           <%= button_to request_path(@request), method: :patch,
                   params: { request: { approved: true } },
                   class: "check-ap border-0 bg-transparent p-0 d-inline-flex align-items-center gap-1" do %>
                   <i class="fa-solid fa-thumbs-up"></i>
                   <span>Approve</span>
           <% end %>
-
           <%= button_to request_path(@request), method: :patch,
                   params: { request: { approved: false } },
                   class: "check-dec border-0 bg-transparent p-0 d-inline-flex align-items-center gap-1" do %>
                   <i class="fa-solid fa-thumbs-down"></i>
                   <span>Decline</span>
           <% end %>
+        <% end %>
         </div>
         <p class="text-muted small mb-2">Status:
           <% if @request.approved.nil? %>
