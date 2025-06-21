@@ -66,6 +66,10 @@ end
     if params[:request][:approved].present?
       params[:request][:approved] = ActiveModel::Type::Boolean.new.cast(params[:request][:approved])
     end
+    if request_params[:start_date] != @request.start_date.to_s || request_params[:end_date] != @request.end_date.to_s
+      @request.approved = nil
+    end
+
 
     if @request.update(request_params)
       redirect_back fallback_location: request_path(@request), notice: "Request updated!"

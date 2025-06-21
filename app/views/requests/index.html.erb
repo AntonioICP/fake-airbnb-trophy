@@ -10,20 +10,36 @@
         <% @requests.each do |request| %>
           <% flat = request.flat %>
           <%= link_to request_path(request), class: "card-trip text-decoration-none text-dark", data: { marker_id: flat.id } do %>
-            <div class="card-trip">
+            <div class="card-trip d-flex flex-column justify-content-between" style="min-height: 260px;">
               <img src="<%= flat.image_url %>" alt="<%= flat.name %>" />
-              <div class="card-trip-infos d-flex justify-content-between align-items-center">
-                <div>
 
+              <div class="card-trip-infos d-flex justify-content-between align-items-start">
+                <div>
                   <h2><%= request.flat.name %></h2>
                   <div class="d-flex mt-2">
-                  <p class="me-3">Check-in <%= request.start_date.strftime("%B %-d, %Y") %></p>
+                    <p class="me-3">Check-in <%= request.start_date.strftime("%B %-d, %Y") %></p>
                   </div>
                   <p>Check-out <%= request.end_date.strftime("%B %-d, %Y") %></p>
                 </div>
-                <h2 class="card-trip-pricing">$<%= request.flat.price %></h2>
+
+                <div class="d-flex flex-column align-items-end">
+                  <h2 class="card-trip-pricing">$<%= request.flat.price %></h2>
+                </div>
+              </div>
+
+              <div class="text-center pb-2">
+                <p class="text-muted small mb-0">Status:
+                  <% if request.approved.nil? %>
+                    <span class="text-warning fw-semibold">Pending</span>
+                  <% elsif request.approved %>
+                    <span class="text-success fw-semibold">Approved</span>
+                  <% else %>
+                    <span class="text-danger fw-semibold">Declined</span>
+                  <% end %>
+                </p>
               </div>
             </div>
+
           <% end %>
         <% end %>
       </div>
