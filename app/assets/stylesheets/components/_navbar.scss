@@ -10,3 +10,31 @@
 .navbar-lewagon .navbar-brand img {
   width: 40px;
 }
+
+/*  <ul class="autocomplete-suggestions …">  */
+
+[data-controller="autocomplete"] {
+  position: relative;
+  z-index: 100; /* Create a stacking context */
+}
+
+.autocomplete-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: .25rem;
+  z-index: 4000; /* This must be higher than any card/etc. */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.autocomplete-suggestions li {
+  cursor: pointer;
+  white-space: normal;       /* long addresses wrap nicely            */
+}
+
+.autocomplete-suggestions li:hover {
+  background: #f1f3f5;
+}

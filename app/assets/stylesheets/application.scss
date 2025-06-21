@@ -23,3 +23,14 @@
 .custom-marker.highlight {
   background-color: #e63946;
 }
+
+body {
+  padding-top: 70px; /* match navbar height */
+}
+
+.sticky-map {
+  position: sticky;
+  top: 70px; // Adjust to your navbar height
+  height: calc(98vh - 70px); // Keep full height under navbar
+  z-index: 1; // Optional: ensure it's above background but under navbar
+}
