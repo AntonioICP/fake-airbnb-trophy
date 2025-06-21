@@ -22,6 +22,11 @@ class FlatsController < ApplicationController
   def show
     @flat = Flat.find(params[:id])
     @request = Request.new
+    @unavailable_dates = @flat.requests
+                                 .where.not(id: @request.id)
+                                 .where(approved: true)
+                                 .pluck(:start_date, :end_date)
+                                 .map { |range| { from: range[0], to: range[1] } }
     @markers = [
       {
         lat: @flat.latitude,

@@ -1,5 +1,5 @@
 class RequestsController < ApplicationController
-  before_action :set_request, only: %i[edit update show]
+  before_action :set_request, only: %i[edit update show destroy]
 
   after_action :verify_authorized, except: [:index, :show, :create, :update], unless: :skip_pundit?
 
@@ -71,6 +71,11 @@ end
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    @request.destroy
+    redirect_to requests_path, status: :see_other
   end
 
   private
