@@ -39,7 +39,9 @@
             <p class="mb-0">TOTAL</p>
             <p class="mb-0">$<%= ((@request.end_date - @request.start_date).to_i * @request.flat.price).to_f %> AUD</p>
           </div>
-
+          <% if policy(@request).edit? %>
+            <%= link_to "Edit this request", edit_request_path(@request) %>
+          <% end %>
           <%= f.submit "Update", class: "btn btn-primary btn-sm w-100" %>
         </div>
       <% end %>
@@ -59,6 +61,7 @@
           data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
         </div>
       </div>
+
 
 
 
