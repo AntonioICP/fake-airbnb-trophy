@@ -1,5 +1,6 @@
 class RequestsController < ApplicationController
   before_action :set_request, only: %i[edit update show destroy]
+  before_action :authenticate_user!
 
   after_action :verify_authorized, except: [:index, :show, :create, :update], unless: :skip_pundit?
 
